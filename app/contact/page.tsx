@@ -1,4 +1,5 @@
 "use client";
+import type { FormEvent } from "react";
 
 /* import type { Metadata } from "next";
 
@@ -16,7 +17,8 @@ const contactInfo = [
   { label: "Hours", value: "Mon–Fri 7am–6pm · Sat 8am–4pm", href: null },
 ];
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+export default function ContactPage() {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   console.log("FORM SUBMITTED");
 
