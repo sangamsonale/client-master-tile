@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
+"use client";
+
+/* import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact Us — Free Tile Installation Estimate",
   description:
     "Contact Master Tile Installation, Inc. in Framingham, MA for a free estimate on your tile installation project. Call, email, or fill out our form.",
   alternates: { canonical: "/contact" },
-};
+}; */
 
 const contactInfo = [
   { label: "Phone", value: "(508) 555-0100", href: "tel:+15085550100" },
@@ -14,35 +16,38 @@ const contactInfo = [
   { label: "Hours", value: "Mon–Fri 7am–6pm · Sat 8am–4pm", href: null },
 ];
 
-export default function ContactPage() {
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const data = {
-      firstName: (document.getElementById("firstName") as HTMLInputElement).value,
-      lastName: (document.getElementById("lastName") as HTMLInputElement).value,
-      email: (document.getElementById("email") as HTMLInputElement).value,
-      phone: (document.getElementById("phone") as HTMLInputElement).value,
-      serviceNeeded: (document.getElementById("service") as HTMLSelectElement).value,
-      projectDetails: (document.getElementById("message") as HTMLTextAreaElement).value,
-    };
-
-    try {
-      const res = await fetch("https://script.google.com/macros/s/AKfycbz0yQMvHH4T_tw7zEhxKUXSx8Mt2BFbs0jxn5vaQDhAbua6CeH_cXcBpGQDAXZ1Glxo/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      alert("Form submitted successfully!");
-      console.log(await res.text());
-    } catch (err) {
-      console.error(err);
-      alert("Error submitting form");
-    }
+  const data = {
+    firstName: (document.getElementById("firstName") as HTMLInputElement).value,
+    lastName: (document.getElementById("lastName") as HTMLInputElement).value,
+    email: (document.getElementById("email") as HTMLInputElement).value,
+    phone: (document.getElementById("phone") as HTMLInputElement).value,
+    serviceNeeded: (document.getElementById("service") as HTMLSelectElement).value,
+    projectDetails: (document.getElementById("message") as HTMLTextAreaElement).value,
   };
+
+  console.log("Submitting:", data);
+
+  try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbz0yQMvHH4T_tw7zEhxKUXSx8Mt2BFbs0jxn5vaQDhAbua6CeH_cXcBpGQDAXZ1Glxo/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log("status:", res.status);
+    console.log("response:", await res.text());
+
+    alert("Form submitted successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Error submitting form");
+  }
+};
 
   return (
     <div className="bg-white">
