@@ -15,6 +15,35 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const data = {
+      firstName: (document.getElementById("firstName") as HTMLInputElement).value,
+      lastName: (document.getElementById("lastName") as HTMLInputElement).value,
+      email: (document.getElementById("email") as HTMLInputElement).value,
+      phone: (document.getElementById("phone") as HTMLInputElement).value,
+      serviceNeeded: (document.getElementById("service") as HTMLSelectElement).value,
+      projectDetails: (document.getElementById("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch("https://script.google.com/macros/s/AKfycbz0yQMvHH4T_tw7zEhxKUXSx8Mt2BFbs0jxn5vaQDhAbua6CeH_cXcBpGQDAXZ1Glxo/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      alert("Form submitted successfully!");
+      console.log(await res.text());
+    } catch (err) {
+      console.error(err);
+      alert("Error submitting form");
+    }
+  };
+
   return (
     <div className="bg-white">
       {/* Hero */}
@@ -32,7 +61,7 @@ export default function ContactPage() {
           {/* Contact form */}
           <div>
             <h2 className="text-2xl font-bold text-stone-800 mb-6">Request a Free Quote</h2>
-            <form className="space-y-5" noValidate>
+            <form className="space-y-5" onSubmit={handleSubmit} noValidate>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-stone-700 mb-1">
