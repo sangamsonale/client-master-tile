@@ -18,6 +18,7 @@ const contactInfo = [
 
 const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
+  console.log("FORM SUBMITTED");
 
   const data = {
     firstName: (document.getElementById("firstName") as HTMLInputElement).value,
